@@ -36,7 +36,7 @@ abstract class Duck {
 > 문제점1 : <br> 일부 서브클래스는 필요하지 않은 기능도 상속받게 됨
      (슈퍼클래스의 코드 변경 시 원치 않은 영향을 끼칠 수 있음)
      
--> 갑자기 고무오리가 날아요;;;
+-> 고무오리가 날게 되는 불상사가 발생한다.
 
      
 
@@ -70,7 +70,6 @@ interface Quackable {
  }
 ```
 
--> 이렇게 몽총할수가;;
 
 ```kotlin
 class MallardDuck : Duck, Flayable, Quackable {
@@ -91,9 +90,6 @@ class RubberDuck : Duck, Quackable {
  > 문제점: <인터페이스는 모든 서브클래스에서 구현해야하므로 관리가 힘듦 <br>
  또한 날 수 있는 오리에게는 나는 코드를 복붙해야한다. 즉 코드 재활용이 안된다.
  
-3. 오리들은 Duck 클래스를 확장, 행동들은 Behavior 인터페이스를 구현한 클래스를 구성해서 만든다.
-
- https://github.com/Effective-Java-Camp/beautiful-design-pattern/blob/master/chapter1/src/duck/duck.go
 
 ## 디자인 원칙
 
@@ -114,3 +110,56 @@ class RubberDuck : Duck, Quackable {
 전략 패턴을 사용하면 클라이언트로부터 알고리즘을 분리해서 독립적으로 변경할 수 있다.
 
 <b>= 행위를 클래스로 캡슐화해 동적으로 행위를 자유롭게 바꿀 수 있게 해주는 패턴</b>
+
+<br>
+
+## 인터페이스와 상위 형식에 맞춰 프로그래밍
+
+1. 인터페이스 선언
+```go
+type FlyBehavior interface {
+	fly()
+}
+```
+
+2. 구체적인 구현 메소드 정의
+```go
+type FlyWithWings struct{}
+
+type FlyNoWay struct{}
+
+// 실제 구체적인 나는 행동을 구현
+func (f FlyWithWings) fly() {
+	fmt.Println("날고 있어요!!")
+}
+
+func (f FlyNoWay) fly() {
+	fmt.Println("저는 못 날아요")
+}
+```
+
+3. 오리 구조체에 할당
+```go
+type Duck struct {
+	Name          string
+	FlyBehavior   FlyBehavior
+}
+
+func (d *Duck) GetName() {
+	fmt.Printf("저는 %s입니다.\n", d.Name)
+}
+
+func (d *Duck) PerformFly() {
+	d.FlyBehavior.fly()
+}
+```
+
+4. 실행
+```go
+parkDuck := duck.Duck{
+		Name:          "병찬오리",
+		FlyBehavior:   duck.FlyNoWay{},
+	}
+	parkDuck.GetName()
+	parkDuck.PerformFly()
+```
