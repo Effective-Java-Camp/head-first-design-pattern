@@ -115,6 +115,10 @@ class RubberDuck : Duck, Quackable {
 
 ## 인터페이스와 상위 형식에 맞춰 프로그래밍
 
+![image](https://user-images.githubusercontent.com/66015002/197317151-83f1cc02-e038-4b55-8039-fb73811f451c.png)
+
+
+
 1. 인터페이스 선언
 ```go
 type FlyBehavior interface {
