@@ -49,3 +49,9 @@ public float getTemp() {
   return station.getTemperature();
 }
 ```
+
+### facade 패턴 예시
+
+#### SLF4J(The Simple Logging Facade for Java)
+> https://resucito.tistory.com/m/21
+
